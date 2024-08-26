@@ -3,6 +3,7 @@ use iced::Application;
 
 mod cli;
 mod component;
+mod lock;
 mod model;
 mod plugin;
 mod settings;
@@ -10,6 +11,7 @@ mod settings;
 pub fn main() -> iced::Result {
     let args = crate::cli::CliArgs::parse();
     simple_logger::init_with_level(log::Level::Info).unwrap();
+    lock::LockFile::run_exclusive();
     Centerpiece::run(Centerpiece::settings(args))
 }
 
@@ -42,6 +44,7 @@ impl Application for Centerpiece {
     fn new(flags: crate::cli::CliArgs) -> (Self, iced::Command<Message>) {
         let settings = crate::settings::Settings::try_from(flags).unwrap_or_else(|_| {
             eprintln!("There is an issue with the settings, please check the configuration file.");
+            lock::LockFile::unlock();
             std::process::exit(0);
         });
 
@@ -105,6 +108,7 @@ impl Application for Centerpiece {
                     }
                     iced::keyboard::Event::KeyReleased { key, .. } => {
                         if key == iced::keyboard::Key::Named(iced::keyboard::key::Named::Escape) {
+                            lock::LockFile::unlock();
                             return iced::window::close(iced::window::Id::MAIN);
                         }
                         iced::Command::none()
@@ -126,7 +130,10 @@ impl Application for Centerpiece {
 
             Message::UpdateEntries(plugin_id, entries) => self.update_entries(plugin_id, entries),
 
-            Message::Exit => iced::window::close(iced::window::Id::MAIN),
+            Message::Exit => {
+                lock::LockFile::unlock();
+                iced::window::close(iced::window::Id::MAIN)
+            }
         }
     }
 
