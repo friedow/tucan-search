@@ -1,22 +1,27 @@
+use crate::Settings;
+
 pub fn view(entry: &crate::model::Entry, active: bool) -> iced::Element<'static, crate::Message> {
+    let font_size = Settings::get_or_init().font.size;
+
     return iced::widget::container(
         iced::widget::container(
             iced::widget::row![
                 iced::widget::text(clipped_title(entry.title.clone()))
-                    .size(1. * crate::REM)
+                    .size(1. * font_size)
                     .width(iced::Length::Fill)
                     .shaping(iced::widget::text::Shaping::Advanced),
-                iced::widget::text(if active { &entry.action } else { "" }).size(1. * crate::REM)
+                iced::widget::text(if active { &entry.action } else { "" })
+                    .size(1. * font_size)
             ]
-            .padding(0.5 * crate::REM),
+            .padding(0.5 * font_size),
         )
         .style(style(active)),
     )
     // We're fixing the height here to unify it
     // with the height of plugin headers for a smooth
     // scrolling experience
-    .height(crate::ENTRY_HEIGHT)
-    .padding(iced::Padding::from([0., 0.75 * crate::REM]))
+    .height(Settings::entry_height())
+    .padding(iced::Padding::from([0., 0.75 * font_size]))
     .into();
 }
 
@@ -48,14 +53,13 @@ impl iced::widget::container::StyleSheet for Style {
     type Style = iced::Theme;
 
     fn appearance(&self, _style: &Self::Style) -> iced::widget::container::Appearance {
-        let color_settings = crate::settings::Settings::get_or_init();
-
+        let settings = crate::settings::Settings::get_or_init();
         iced::widget::container::Appearance {
             background: None,
             border: iced::Border {
-                color: crate::settings::hexcolor(&color_settings.color.text),
+                color: crate::settings::hexcolor(&settings.color.text),
                 width: 1.0,
-                radius: iced::border::Radius::from(0.1 * crate::REM),
+                radius: iced::border::Radius::from(0.1 * settings.font.size),
             },
             text_color: None,
             shadow: iced::Shadow::default(),

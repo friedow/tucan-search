@@ -1,18 +1,21 @@
+use crate::Settings;
 pub const SEARCH_INPUT_ID: &str = "search_input";
 
 pub fn view(query: &str, add_horizontal_rule: bool) -> iced::Element<'static, crate::Message> {
+    let font_size = Settings::get_or_init().font.size;
+    let prompt_symbol = &Settings::get_or_init().font.prompt_symbol;
+
     let mut view = iced::widget::column![iced::widget::row![
-        iced::widget::container(iced::widget::text("󰍉 ").size(1.3 * crate::REM)).padding(
-            iced::Padding::from([0.2 * crate::REM, -0.3 * crate::REM, 0., 0.])
-        ),
+        iced::widget::container(iced::widget::text(prompt_symbol).size(font_size))
+            .padding(iced::Padding::from([0.14 * font_size, 0., 0., 0.])),
         iced::widget::text_input("Search", query)
             .id(iced::widget::text_input::Id::new(SEARCH_INPUT_ID))
             .on_input(crate::Message::Search)
-            .size(1. * crate::REM)
+            .size(1. * font_size)
             .style(style())
     ]
-    .padding(iced::Padding::from([0.8 * crate::REM, 1.2 * crate::REM])),]
-    .padding(iced::Padding::from([0., 0., 1., 0.]));
+    .padding(iced::Padding::from([0.8 * font_size, 1.2 * font_size])),]
+    .padding(iced::Padding::from([0., 0., 2., 0.]));
 
     if add_horizontal_rule {
         view = view.push(iced::widget::horizontal_rule(1));

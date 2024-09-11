@@ -1,5 +1,6 @@
 use clap::Parser;
 use iced::Application;
+use crate::settings::Settings;
 
 mod cli;
 mod component;
@@ -308,10 +309,10 @@ impl Application for Centerpiece {
 
 impl Centerpiece {
     fn settings(flags: crate::cli::CliArgs) -> iced::Settings<crate::cli::CliArgs> {
-        let default_text_size = iced::Pixels(crate::REM);
+        let default_text_size = iced::Pixels(40.0);
 
         let default_font = iced::Font {
-            family: iced::font::Family::Name("FiraCode Nerd Font"),
+            family: iced::font::Family::Name(&Settings::get_or_init().font.default),
             weight: iced::font::Weight::Normal,
             stretch: iced::font::Stretch::Normal,
             style: iced::font::Style::default(),
@@ -508,9 +509,6 @@ impl Centerpiece {
     }
 }
 
-pub const REM: f32 = 14.0;
-pub const ENTRY_HEIGHT: f32 = 2.3 * crate::REM;
-
 struct SandboxStyle {}
 impl iced::application::StyleSheet for SandboxStyle {
     type Style = iced::Theme;
@@ -538,7 +536,7 @@ impl iced::widget::container::StyleSheet for ApplicationWrapperStyle {
             border: iced::Border {
                 color: iced::Color::TRANSPARENT,
                 width: 0.,
-                radius: iced::border::Radius::from(0.25 * crate::REM),
+                radius: iced::border::Radius::from(0.25 * Settings::get_or_init().font.size),
             },
             text_color: None,
             shadow: iced::Shadow::default(),
