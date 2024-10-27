@@ -1,9 +1,37 @@
-use hex_color::HexColor;
 use serde::Deserialize;
 use std::sync::OnceLock;
 
+pub mod cli;
+
+pub fn config_directory() -> anyhow::Result<String> {
+    let home_directory = std::env::var("HOME")?;
+    let config_in_home = format!("{home_directory}/.config");
+    Ok(std::env::var("XDG_CONFIG_HOME").unwrap_or(config_in_home))
+}
+
+pub fn centerpiece_default_config_path() -> anyhow::Result<String> {
+    let config_directory = centerpiece_config_directory()?;
+    Ok(format!("{config_directory}/config.yml"))
+}
+
+pub fn centerpiece_config_directory() -> anyhow::Result<String> {
+    let config_directory = config_directory()?;
+    Ok(format!("{config_directory}/centerpiece"))
+}
+
+pub fn cache_directory() -> anyhow::Result<String> {
+    let home_directory = std::env::var("HOME")?;
+    let cache_in_home = format!("{home_directory}/.cache");
+    Ok(std::env::var("XDG_CACHE_HOME").unwrap_or(cache_in_home))
+}
+
+pub fn centerpiece_cache_directory() -> anyhow::Result<String> {
+    let cache_directory = cache_directory()?;
+    Ok(format!("{cache_directory}/centerpiece"))
+}
+
 pub fn hexcolor(color: &str) -> iced::Color {
-    let hex_col = HexColor::parse(color).unwrap_or_else(|_| {
+    let hex_col = hex_color::HexColor::parse(color).unwrap_or_else(|_| {
         eprintln!(
             "Failed to parse color settings: {} is not a valid color code",
             color
@@ -315,7 +343,7 @@ pub struct Settings {
 
 impl Settings {
     pub fn new() -> Self {
-        let config_directory_result = crate::plugin::utils::centerpiece_config_directory();
+        let config_directory_result = centerpiece_config_directory();
         if let Err(error) = config_directory_result {
             log::error!(
             error = log::error!("{:?}", error);
@@ -362,7 +390,7 @@ impl std::convert::TryFrom<crate::cli::CliArgs> for Settings {
     fn try_from(args: crate::cli::CliArgs) -> Result<Self, Self::Error> {
         let maybe_config_file_path = args.config;
         let config_file_path = maybe_config_file_path.unwrap_or_else(|| {
-            crate::plugin::utils::centerpiece_default_config_path().unwrap_or_else(|error| {
+            centerpiece_default_config_path().unwrap_or_else(|error| {
                 log::error!(
                     error = log::error!("{:?}", error);
                     "Unable to find default config file.",

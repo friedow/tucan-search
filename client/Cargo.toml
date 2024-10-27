@@ -9,8 +9,8 @@ edition = "2021"
 
 [dependencies]
 # general
+settings = { path = "../settings" }
 anyhow = { version = "1.0.86", features = ["backtrace"] }
-clap = { version = "4.5.18", features = ["derive", "env"] }
 log = { version = "0.4.22", features = ["kv_unstable_serde"] }
 simple_logger = { version = "5.0.0", features = [
   "colors",
@@ -19,14 +19,10 @@ simple_logger = { version = "5.0.0", features = [
   "stderr",
 ] }
 serde = { version = "1.0.210", features = ["derive"] }
-
-# settings
-serde_yaml = "0.9.34"
+clap = { version = "4.5.18", features = ["derive", "env"] }
 
 # application window
 iced = { version = "0.13.1", features = ["svg"] }
-
-hex_color = "3"
 
 # plugins
 async-trait = "0.1.83"

@@ -3,7 +3,7 @@ use anyhow::Context;
 
 pub struct GitRepositoriesPlugin {
     entries: Vec<crate::model::Entry>,
-    settings: crate::settings::Settings,
+    settings: settings::Settings,
 }
 
 impl Plugin for GitRepositoriesPlugin {
@@ -30,7 +30,7 @@ impl Plugin for GitRepositoriesPlugin {
     fn new() -> Self {
         Self {
             entries: vec![],
-            settings: crate::settings::Settings::new(),
+            settings: settings::Settings::new(),
         }
     }
 

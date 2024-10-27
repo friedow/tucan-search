@@ -27,7 +27,6 @@ fn main() {
             let git_repository_path_option = git_directory_path.strip_suffix("/.git");
             if git_repository_path_option.is_none() {
                 log::warn!(
-                    path = log::as_serde!(git_directory_path);
                     "Unable to strip '/.git' suffix from path '{}'",
                     git_directory_path
                 );
@@ -39,19 +38,12 @@ fn main() {
     write_index_file(git_repository_paths);
 }
 
-pub fn cache_directory() -> anyhow::Result<String> {
-    let home_directory = std::env::var("HOME")?;
-    let cache_in_home = format!("{home_directory}/.cache");
-    let cache_directory = std::env::var("XDG_CACHE_HOME").unwrap_or(cache_in_home);
-    Ok(format!("{cache_directory}/centerpiece"))
-}
-
 fn write_index_file(git_repository_paths: Vec<&str>) {
-    let cache_directory_result = cache_directory();
+    let cache_directory_result = settings::centerpiece_cache_directory();
     if let Err(error) = cache_directory_result {
         log::error!(
-            error = log::error!("{:?}", error);
-            "Could not determine cache directory.",
+        error = log::error!("{:?}", error);
+        "Could not determine cache directory.",
         );
         panic!();
     }
@@ -59,8 +51,8 @@ fn write_index_file(git_repository_paths: Vec<&str>) {
 
     if let Err(error) = std::fs::create_dir_all(&centerpice_cache_directory) {
         log::error!(
-            error = log::as_error!(error);
-            "Error while creating cache directory",
+        error = log::error!("{:?}", error);
+        "Error while creating cache directory",
         );
         panic!();
     }
@@ -71,8 +63,8 @@ fn write_index_file(git_repository_paths: Vec<&str>) {
     let index_file_result = std::fs::File::create(index_file_path);
     if let Err(error) = index_file_result {
         log::error!(
-            error = log::as_error!(error);
-            "Error while creating index file",
+        error = log::error!("{:?}", error);
+        "Error while creating index file",
         );
         panic!();
     }
@@ -81,8 +73,8 @@ fn write_index_file(git_repository_paths: Vec<&str>) {
     let mut writer = std::io::BufWriter::new(index_file);
     if let Err(error) = serde_json::to_writer(&mut writer, &git_repository_paths) {
         log::error!(
-            error = log::as_error!(error);
-            "Error while writing index file",
+        error = log::error!("{:?}", error);
+        "Error while writing index file",
         );
         panic!();
     }

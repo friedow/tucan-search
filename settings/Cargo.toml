@@ -1,0 +1,14 @@
+[package]
+name = "settings"
+edition = "2021"
+version.workspace = true
+
+[dependencies]
+log = { version = "0.4.22", features = ["kv_unstable_serde"] }
+anyhow = "1.0.86"
+
+serde = { version = "1.0.210", features = ["derive"] }
+serde_yaml = "0.9.34"
+iced = { version = "0.13.1", features = ["svg"] }
+hex_color = "3"
+clap = { version = "4.5.18", features = ["derive", "env"] }

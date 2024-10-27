@@ -34,7 +34,7 @@ impl Plugin for BookmarksPlugin {
         self.entries.clear();
         let profile_path = crate::plugin::firefox::utils::profile_path()?;
         let bookmarks_file_path = format!("{profile_path}/places.sqlite");
-        let cache_directory = crate::plugin::utils::centerpiece_cache_directory()?;
+        let cache_directory = settings::centerpiece_cache_directory()?;
         let bookmarks_cache_file_path = format!("{cache_directory}/firefox-bookmarks.sqlite");
 
         std::fs::copy(bookmarks_file_path, &bookmarks_cache_file_path)

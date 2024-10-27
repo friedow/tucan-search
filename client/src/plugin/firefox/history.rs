@@ -34,7 +34,7 @@ impl Plugin for HistoryPlugin {
         self.entries.clear();
         let profile_path = crate::plugin::firefox::utils::profile_path()?;
         let history_file_path = format!("{profile_path}/places.sqlite");
-        let cache_directory = crate::plugin::utils::centerpiece_cache_directory()?;
+        let cache_directory = settings::centerpiece_cache_directory()?;
         let history_cache_file_path = format!("{cache_directory}/firefox-history.sqlite");
 
         std::fs::copy(history_file_path, &history_cache_file_path)

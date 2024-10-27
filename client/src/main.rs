@@ -1,14 +1,12 @@
 use clap::Parser;
 
-mod cli;
 mod component;
 mod model;
 mod plugin;
-mod settings;
 
 pub fn main() -> iced::Result {
-    let args = crate::cli::CliArgs::parse();
-    crate::settings::Settings::try_from(args).unwrap_or_else(|_| {
+    let args = settings::cli::CliArgs::parse();
+    settings::Settings::try_from(args).unwrap_or_else(|_| {
         eprintln!("There is an issue with the settings, please check the configuration file.");
         std::process::exit(1);
     });
@@ -192,7 +190,7 @@ fn subscription(_centerpiece: &Centerpiece) -> iced::Subscription<Message> {
         },
     )];
 
-    let settings = crate::settings::Settings::get_or_init();
+    let settings = settings::Settings::get_or_init();
 
     if settings.plugin.applications.enable {
         subscriptions.push(crate::plugin::utils::spawn::<
@@ -292,21 +290,21 @@ fn subscription(_centerpiece: &Centerpiece) -> iced::Subscription<Message> {
 }
 
 fn theme(_centerpiece: &Centerpiece) -> iced::Theme {
-    let settings = crate::settings::Settings::get_or_init();
+    let settings = settings::Settings::get_or_init();
     iced::Theme::custom(
         "centerpiece theme".to_string(),
         iced::theme::Palette {
-            background: crate::settings::hexcolor(&settings.color.background),
-            text: crate::settings::hexcolor(&settings.color.text),
-            primary: crate::settings::hexcolor(&settings.color.text),
-            success: crate::settings::hexcolor(&settings.color.text),
-            danger: crate::settings::hexcolor(&settings.color.text),
+            background: settings::hexcolor(&settings.color.background),
+            text: settings::hexcolor(&settings.color.text),
+            primary: settings::hexcolor(&settings.color.text),
+            success: settings::hexcolor(&settings.color.text),
+            danger: settings::hexcolor(&settings.color.text),
         },
     )
 }
 
 fn style(_centerpiece: &Centerpiece, _theme: &iced::Theme) -> iced::application::Appearance {
-    let color_settings = crate::settings::Settings::get_or_init();
+    let color_settings = settings::Settings::get_or_init();
 
     iced::application::Appearance {
         background_color: iced::Color::TRANSPARENT,

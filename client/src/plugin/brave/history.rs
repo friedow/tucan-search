@@ -33,11 +33,11 @@ impl Plugin for HistoryPlugin {
     fn update_entries(&mut self) -> anyhow::Result<()> {
         self.entries.clear();
 
-        let config_directory = crate::plugin::utils::config_directory()?;
+        let config_directory = settings::config_directory()?;
         let history_file_path =
             format!("{config_directory}/BraveSoftware/Brave-Browser/Default/History");
 
-        let cache_directory = crate::plugin::utils::centerpiece_cache_directory()?;
+        let cache_directory = settings::centerpiece_cache_directory()?;
         let history_cache_file_path = format!("{cache_directory}/brave-history.sqlite");
 
         std::fs::copy(history_file_path, &history_cache_file_path)

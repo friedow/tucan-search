@@ -4,6 +4,7 @@ version.workspace = true
 edition = "2021"
 
 [dependencies]
+settings = { path = "../../settings" }
 log = { version = "0.4.22", features = ["kv_unstable_serde"] }
 simple_logger = { version = "5.0.0", features = [
   "colors",

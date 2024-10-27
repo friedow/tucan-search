@@ -3,20 +3,20 @@ use clap::Parser;
 #[derive(Parser, Debug, Default)]
 #[command(author, version = CliArgs::version(), about, long_about=None) ]
 #[command(next_line_help = true)]
-pub(crate) struct CliArgs {
+pub struct CliArgs {
     #[clap(
         short,
         long,
         help = "The location of the configuration file",
         env = "CENTERPIECE_CONFIGURATION_FILE"
     )]
-    pub(crate) config: Option<String>,
+    pub config: Option<String>,
 }
 
 impl CliArgs {
     /// Surface current version together with the current git revision and date,
     /// if available
-    fn version() -> &'static str {
+    pub fn version() -> &'static str {
         const VERSION: &str = env!("CARGO_PKG_VERSION");
         let date = option_env!("GIT_DATE")
             .map(|date| format!(" - {}", date))
