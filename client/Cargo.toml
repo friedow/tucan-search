@@ -25,7 +25,7 @@ serde_yaml = "0.9.34"
 
 # application window
 iced = { version = "0.13.1", features = ["svg"] }
-iced_layershell = "0.12.0"
+iced_layershell = "0.13.0"
 
 hex_color = "3"
 

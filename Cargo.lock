@@ -1992,9 +1992,9 @@ dependencies = [
 
 [[package]]
 name = "iced_layershell"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6dd589c7ed28c3d7e2c65ae9d661417f8a24857dc57a1fce4a5cf47ff5f51c46"
+checksum = "6aa1d5f115b7df972cfd94040394b2fdfac0480667283099277a9c6fdcdc2a7f"
 dependencies = [
  "futures",
  "iced",
@@ -2013,9 +2013,9 @@ dependencies = [
 
 [[package]]
 name = "iced_layershell_macros"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "563e2b7ae2256c825ba8caa0cf9416b5e2ae8973766b51e3b5cd5c350f269aa2"
+checksum = "c8c27bee8a907fd2c2275d5bc300cf7fcd87850bcc60827eedc0fcfc702fad3c"
 dependencies = [
  "darling",
  "manyhow",
@@ -2287,9 +2287,9 @@ dependencies = [
 
 [[package]]
 name = "layershellev"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce7d1b9341f040e58a604d54f8e38a3e669125c665ff043d5b8ab6cd0662841c"
+checksum = "f66f29d088b4c3d182ae97258a93c6e480c7ac93d7536419472eb6837df55bc6"
 dependencies = [
  "bitflags 2.6.0",
  "calloop 0.14.1",
@@ -4579,9 +4579,9 @@ dependencies = [
 
 [[package]]
 name = "waycrate_xkbkeycode"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f2fb462c0162d6787c41a324f9214b3ba7e5e2775b3c457d3bd2b8e9c14bae5"
+checksum = "23356f11fc00444dcf09e2458bd951d3f191a4a9bbdcab3779cc46f6477c1363"
 dependencies = [
  "bitflags 2.6.0",
  "calloop 0.14.1",
