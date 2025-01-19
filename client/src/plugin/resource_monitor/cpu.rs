@@ -32,12 +32,12 @@ impl Plugin for CpuPlugin {
     }
 
     fn update_entries(&mut self) -> anyhow::Result<()> {
-        self.sysinfo.refresh_cpu();
+        self.sysinfo.refresh_cpu_all();
         self.entries.clear();
 
         let mut core_usages: String = format!(
             "{}% – {} Cores:",
-            self.sysinfo.global_cpu_info().cpu_usage() as i32,
+            self.sysinfo.global_cpu_usage() as i32,
             self.sysinfo.cpus().len()
         );
 
