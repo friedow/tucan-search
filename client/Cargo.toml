@@ -43,7 +43,7 @@ chrono = "0.4.38"
 freedesktop-desktop-entry = "0.5.1"
 
 # sway_windows plugin
-swayipc = "3.0.1"
+swayipc = "3.0.3"
 
 # system monitor plugin
 sysinfo = "0.30.5"
