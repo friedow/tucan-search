@@ -40,7 +40,7 @@ serde_json = "1.0.133"
 chrono = "0.4.38"
 
 # applications plugin
-freedesktop-desktop-entry = "0.5.1"
+freedesktop-desktop-entry = "0.7.5"
 
 # sway_windows plugin
 swayipc = "3.0.1"
